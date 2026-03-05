@@ -1,0 +1,94 @@
+# Цвета и оформление в CSS
+
+## Что я узнал
+
+CSS позволяет задавать цвета и оформление элементов через различные подходы:  
+- Свойства `color`, `background-color`, `border`, `outline` и `box-shadow`.  
+- Цвета можно задавать множеством способов: именами (`red`, `magenta`), через RGB, RGBA, HSL, HSLA, HWB, LCH, LAB, oklab, Display-P3.  
+- Свойство `currentColor` позволяет использовать текущий цвет текста для границ и заливки SVG.  
+- Цвета можно комбинировать через `color-mix`.  
+- Также доступно управление прозрачностью через `opacity` или встроенные альфа-каналы в цветах.
+
+Это полезно для создания визуально выразительных интерфейсов, а также для экспериментов с современными цветовыми пространствами.
+
+### Пример
+```javascript
+body {
+  width: 400px;
+  height: 400px;
+  font-size: 2em;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.red-text { color: red; }
+.yellow-bg { background-color: rgb(255, 255, 0); }
+.green-border { border: 2px solid #00FF00; }
+.pink-outline { outline: 2px solid #F6A7FFC6; }
+.blue-shadow { box-shadow: 0 0 0 5px lightskyblue; }
+
+p { font-size: 1rem; }
+.rgb-color { color: rgb(0, 0, 255); }
+.hex-color { color: #63C20E; }
+.hsl-color { color: hsl(0, 70%, 63%); }
+.hwb-color { color: hwb(265deg 8% 0%); }
+.lch-color { color: lch(50% 110 325); }
+.lab-color { color: lab(85% 8.8 113.4); }
+.oklab-color { color: oklab(0.79 -0.15 -0.11); }
+.display-p3-color { color: color(display-p3 1 0.5 0.1); }
+.color-mix { color: color-mix(in lch, magenta 80%, #00E0AA); }
+
+.magenta-color { color: magenta; }
+.red-color { color: rgb(255 0 0); }
+.green-color { color: rgb(0 255 0); }
+.blue-color { color: rgb(0 0 255); }
+.yellow-color { color: rgb(255 255 0); }
+
+.red-color-opacity { color: rgb(255 0 0 / 0.5); }
+.green-color-opacity { color: rgb(0 255 0 / 0.5); }
+.blue-color-opacity { color: rgb(0 0 255 / 0.25); }
+
+.red-color2 { color: rgb(255, 0, 0); }
+.blue-color-opacity2 { color: rgba(0, 0, 255, 0.5); }
+
+.red-color3 { color: #FF0000; }
+.green-color3 { color: #00FF00; }
+.blue-color3 { color: #0000FF; }
+.dirty-yellow-color3 { color: #999900; }
+
+.red-color4 { color: #F00; }
+.green-color4 { color: #0F0; }
+.blue-color4 { color: #00F; }
+.dirty-yellow-color4 { color: #990; }
+
+.red-color-opacity1 { color: #FF0000C7; }
+.green-color-opacity1 { color: #00FF0080; }
+.blue-color-opacity1 { color: #0000FF3D; }
+
+.red-color1 { color: hsl(0 100% 50%); }
+.green-color1 { color: hsl(120 100% 50%); }
+.blue-color1 { color: hsl(240 100% 50%); }
+
+.red-color-opacity2 { color: hsl(0 100% 50% / 0.75); }
+.green-color-opacity2 { color: hsl(120 100% 50% / 0.5); }
+.blue-color-opacity2 { color: hsl(240 100% 50% / 0.25); }
+
+.transparent-color { color: transparent; }
+
+.current-color-border {
+  color: orange;
+  border: 2px solid currentColor;
+}
+
+.button { color: tomato; }
+svg * { fill: currentColor; }
+```
+
+#### Связи
+
+[[CSS Colors]]
+[[CSS Typography]]
+[[CurrentColor]]
+[[RGBA Colors]]
+[[HSL Colors]]
+[[Advanced Color Spaces]]
