@@ -32,7 +32,7 @@ body {
 .big-text {
   font-size: 32px;
 }
-````
+```
 
 #### Связи
 
