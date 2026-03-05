@@ -1,5 +1,6 @@
 import os
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Preformatted
+from datetime import datetime
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib import colors
 from reportlab.lib.units import inch
@@ -9,10 +10,16 @@ from reportlab.pdfbase import pdfmetrics
 
 # ====== CONFIG ======
 VAULT_PATH = "/home/user/Public/gh/second-brain-web/Frontend"
-OUTPUT_PATH = "frontend-second-brain.pdf"
+OUTPUT_PATH = "frontend-second-brain.pdf"  # базовое имя файла
 FONT_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 # ====================
 
+# функция для добавления текущей даты
+def get_timestamped_filename(base_path):
+    now = datetime.now()
+    timestamp = now.strftime("_%Y-%m-%d_%H-%M-%S")
+    name, ext = os.path.splitext(base_path)
+    return f"{name}{timestamp}{ext}"
 
 def get_all_markdown_files(base_path):
     md_files = []
@@ -23,16 +30,14 @@ def get_all_markdown_files(base_path):
                 md_files.append(full_path)
     return sorted(md_files)
 
-
 def build_pdf(vault_path, output_path):
-    # Регистрируем Unicode-шрифт
     pdfmetrics.registerFont(TTFont("DejaVuSans", FONT_PATH))
+    output_path = get_timestamped_filename(output_path)  # добавляем дату
 
     doc = SimpleDocTemplate(output_path, pagesize=A4)
     elements = []
 
     styles = getSampleStyleSheet()
-
     header_style = ParagraphStyle(
         'HeaderStyle',
         parent=styles['Heading2'],
@@ -41,7 +46,6 @@ def build_pdf(vault_path, output_path):
         fontSize=12,
         spaceAfter=6
     )
-
     text_style = ParagraphStyle(
         'TextStyle',
         parent=styles['Normal'],
@@ -54,8 +58,6 @@ def build_pdf(vault_path, output_path):
 
     for file_path in md_files:
         relative_path = os.path.relpath(file_path, vault_path)
-
-        # Заголовок с путём
         elements.append(Paragraph(f"FILE: {relative_path}", header_style))
         elements.append(Spacer(1, 0.2 * inch))
 
@@ -65,7 +67,6 @@ def build_pdf(vault_path, output_path):
         except Exception as e:
             content = f"[ERROR READING FILE: {e}]"
 
-        # Разбиваем текст на строки
         for line in content.split("\n"):
             elements.append(Paragraph(line.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"), text_style))
 
